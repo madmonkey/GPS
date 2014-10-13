@@ -1,0 +1,9 @@
+The password for 'WatcherGuy.pfx' is 'watcherguy'.
+
+If you are having trouble building the app because of the 'WatcherGuy.pfx', then follow these directions:
+- Right click on 'FileSystemWatch' project and select 'Properties'.
+- Go to the 'Signing' tab.
+- Select 'WatcherGuy.pfx' under 'Choose a strong name key file' list.
+- Click on Change Password button.
+- The older password should be 'watcherguy'. Please make the new password the same!
+- Rebuild the project and you should be ok now. :)

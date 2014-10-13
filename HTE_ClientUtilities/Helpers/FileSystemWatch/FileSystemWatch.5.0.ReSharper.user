@@ -1,0 +1,126 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="1D9A5526-2EA1-4F00-81C0-B5383B45F49A/f:FileChangedEventArg.cs" caret="0" fromTop="0" />
+      <File id="26ECFB09-A6CE-4608-812B-00BB8FFBE4F4/f:Program.cs" caret="179" fromTop="8" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="26ECFB09-A6CE-4608-812B-00BB8FFBE4F4/f:Program.cs" caret="601" fromTop="19" />
+      <File id="26ECFB09-A6CE-4608-812B-00BB8FFBE4F4/f:Program.cs" caret="410" fromTop="15" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir>C:\Program Files\NUnit 2.5.3\bin\net-2.0\</NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="ctor" priority="2" />
+      <Item value="private" priority="1" />
+      <Item value="FileSystemWatch" priority="1" />
+      <Item value="fsw" priority="12" />
+      <Item value="new" priority="3" />
+      <Item value="FileSystemWatcher" priority="1" />
+      <Item value="public" priority="6" />
+      <Item value="void" priority="1" />
+      <Item value="string" priority="3" />
+      <Item value="path" priority="0" />
+      <Item value="true" priority="0" />
+      <Item value="IncludeSubdirectories" priority="0" />
+      <Item value="e" priority="4" />
+      <Item value="switch" priority="0" />
+      <Item value="enum" priority="0" />
+      <Item value="WatcherChangeTypes`0" priority="2" />
+      <Item value="FileSystemEventArgs`0" priority="0" />
+      <Item value="propg" priority="0" />
+      <Item value="ChangeType`0" priority="1" />
+      <Item value="this" priority="2" />
+      <Item value="args" priority="3" />
+      <Item value="event" priority="1" />
+      <Item value="FileChangedEventArg`0" priority="1" />
+      <Item value="if" priority="0" />
+      <Item value="ChangeNotification" priority="0" />
+      <Item value="h" priority="0" />
+      <Item value="TranslateEvent`0" priority="2" />
+      <Item value="var" priority="1" />
+      <Item value="Watcher`0" priority="0" />
+      <Item value="Console`0" priority="2" />
+      <Item value="using" priority="0" />
+      <Item value="System" priority="0" />
+      <Item value="Runtime" priority="0" />
+      <Item value="InteropServices" priority="0" />
+      <Item value="Guid" priority="0" />
+      <Item value="InterfaceType" priority="2" />
+      <Item value="ComInterfaceType`0" priority="2" />
+      <Item value="DispId" priority="2" />
+      <Item value="ClassInterface" priority="0" />
+      <Item value="ClassInterfaceType`0" priority="0" />
+      <Item value="ProgId" priority="0" />
+      <Item value="ComVisible" priority="0" />
+      <Item value="IWatcher`0" priority="0" />
+      <Item value="interface" priority="0" />
+      <Item value="object" priority="0" />
+      <Item value="fileChangedEventArgs" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.IO.FileSystemWatcher">
+      <Item value="EnableRaisingEvents" priority="0" />
+      <Item value="EndInit`0" priority="0" />
+      <Item value="Changed" priority="1" />
+      <Item value="Created" priority="0" />
+      <Item value="Deleted" priority="0" />
+      <Item value="Renamed" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.IO.FileSystemEventArgs">
+      <Item value="ChangeType" priority="2" />
+      <Item value="FullPath" priority="0" />
+      <Item value="Name" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.IO.WatcherChangeTypes">
+      <Item value="Deleted" priority="0" />
+      <Item value="Changed" priority="0" />
+      <Item value="Renamed" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:FileSystemWatch.FileChangedEventArg">
+      <Item value="ChangeType" priority="0" />
+      <Item value="FullPath" priority="0" />
+      <Item value="Name" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:FileSystemWatch.Watcher">
+      <Item value="BeginMonitoring`0" priority="0" />
+      <Item value="ChangeNotification" priority="0" />
+      <Item value="StopMonitoring`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Console">
+      <Item value="WriteLine`0" priority="0" />
+      <Item value="ReadLine`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:FileSystemWatch.FileChangedEventArgs">
+      <Item value="ChangeType" priority="0" />
+      <Item value="Name" priority="0" />
+      <Item value="FullPath" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Runtime.InteropServices.ComInterfaceType">
+      <Item value="InterfaceIsDual" priority="2" />
+      <Item value="InterfaceIsIDispatch" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Runtime.InteropServices.ClassInterfaceType">
+      <Item value="None" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.String">
+      <Item value="Empty" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>

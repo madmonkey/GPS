@@ -1,0 +1,45 @@
+Type=Exe
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Form=Forms\frmServiceControl.frm
+Module=modNTServiceControl; Modules\modNTServiceControl.bas
+Module=modApplication; Modules\modApplication.bas
+Module=modServiceConstants; Modules\modServiceConstants.bas
+Class=Mutex; Classes\Mutex.cls
+Module=modCleanup; ..\..\HTE_ClientInterface\Modules\modCleanup.bas
+ResFile32="Resources\ServiceController.res"
+IconForm="frmServiceControl"
+Startup="Sub Main"
+HelpFile=""
+Title="Service Controller"
+ExeName32="ServiceController.exe"
+Command32=""
+Name="ServiceController"
+HelpContextID="0"
+Description="Global Positioning Service Controller"
+CompatibleMode="0"
+MajorVer=1
+MinorVer=0
+RevisionVer=24
+AutoIncrementVer=1
+ServerSupportFiles=0
+VersionCompanyName="SunGard HTE Inc"
+CondComp="UseThemes = 1 : GPFProtect = 1 : AggressiveShutDown = 1 : Singleton = 1"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=-1
+CodeViewDebugInfo=0
+NoAliasing=-1
+BoundsCheck=-1
+OverflowCheck=-1
+FlPointCheck=-1
+FDIVCheck=-1
+UnroundedFP=0
+StartMode=0
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+DebugStartupOption=0
+
+[MS Transaction Server]
+AutoRefresh=1

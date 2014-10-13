@@ -1,0 +1,426 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<link REL="stylesheet" HREF="../mdb.css" TYPE="text/css">
+<script LANGUAGE="JScript">
+function setVisible( elem, isVisible )
+{
+	if (isVisible)
+		elem.style.display = "inline";
+	else
+		elem.style.display = "none";
+}
+
+function helptext_onclick() 
+{
+	if (DMVRESP.style.display == "none") 
+	{
+		setVisible( DMVRESP, true );
+		helptext.focus();
+		helptext.value = "Hide Original Response";
+	} 
+	else 
+	{
+		setVisible( DMVRESP, false );
+		helptext.value = "Show Original Response";
+	}
+}
+</script>
+<script FOR="window" EVENT="onLoad" LANGUAGE="JScript"> 
+	//Initialize info broadcast subscriber object
+	Subscriber.Topic = "HTE_MDB";
+
+
+	// Show vehicle info if there is any
+	if ( ("{MDB_lic}" != "") ||
+			("{MDB_lis}" != "") || 
+			("{MDB_vma}" != "") || 
+			("{MDB_vmo}" != "") || 
+			("{MDB_vyr}" != "") )
+	{
+		setVisible( document.all("VehicleTable"), true );
+	}
+
+	// Show dispatch detail header if needed
+	if ( ("{MDB_BTN1_NAME}" != "") ||
+			("{MDB_BTN2_NAME}" != "") || 
+			("{MDB_BTN3_NAME}" != "") || 
+			("{MDB_BTN4_NAME}" != "") || 
+			("{MDB_BTN5_NAME}" != "") || 
+			("{MDB_BTN6_NAME}" != "") || 
+			("{MDB_BTN7_NAME}" != "") || 
+			("{MDB_BTN8_NAME}" != "") || 
+			("{MDB_BTN9_NAME}" != "") || 
+			("{MDB_BTN10_NAME}" != "") || 
+			("{MDB_BTN11_NAME}" != "") || 
+			("{MDB_BTN12_NAME}" != "") || 
+			("{MDB_BTN13_NAME}" != "") || 
+			("{MDB_BTN14_NAME}" != "") || 
+			("{MDB_BTN15_NAME}" != "") )
+	{
+		setVisible( document.all("DETAIL"), true );
+	}
+
+	// Show actual dispatch detail for thaings that exist
+	if ("{MDB_BTN1_NAME}" != "")
+		setVisible( document.all("BTN1"), true );
+
+	if ("{MDB_BTN2_NAME}" != "")
+		setVisible( document.all("BTN2"), true );
+
+	if ("{MDB_BTN3_NAME}" != "")
+		setVisible( document.all("BTN3"), true );
+
+	if ("{MDB_BTN4_NAME}" != "")
+		setVisible( document.all("BTN4"), true );
+
+	if ("{MDB_BTN5_NAME}" != "")
+		setVisible( document.all("BTN5"), true );
+
+	if ("{MDB_BTN6_NAME}" != "")
+		setVisible( document.all("BTN6"), true );
+
+	if ("{MDB_BTN7_NAME}" != "")
+		setVisible( document.all("BTN7"), true );
+
+	if ("{MDB_BTN8_NAME}" != "")
+		setVisible( document.all("BTN8"), true );
+
+	if ("{MDB_BTN9_NAME}" != "")
+		setVisible( document.all("BTN9"), true );
+
+	if ("{MDB_BTN10_NAME}" != "")
+		setVisible( document.all("BTN10"), true );
+
+	if ("{MDB_BTN11_NAME}" != "")
+		setVisible( document.all("BTN11"), true );
+
+	if ("{MDB_BTN12_NAME}" != "")
+		setVisible( document.all("BTN12"), true );
+
+	if ("{MDB_BTN13_NAME}" != "")
+		setVisible( document.all("BTN13"), true );
+
+	if ("{MDB_BTN14_NAME}" != "")
+		setVisible( document.all("BTN14"), true );
+
+	if ("{MDB_BTN15_NAME}" != "")
+		setVisible( document.all("BTN15"), true );
+
+</script>
+<script
+FOR="Subscriber" EVENT="OnReceiveString(Tag,Data)" LANGUAGE="JScript"> 
+	strCallNum = new String("{MDB_CALL#}");
+	strTag = new String(Tag);
+
+	//if this is for a BTN field for this dispatch
+	if (strTag.substr(0,strCallNum.length+4) == strCallNum.concat("_BTN"))
+	{
+		strData = new String(Data);
+		re = /\r\n*/g;
+		strData = strData.replace( re, "<br>" );
+		strField = strTag.substr(strCallNum.length + 1);
+		document.all(strField).innerHTML = strData;
+
+		strDiv = strField.substring(0,strField.lastIndexOf("_"));
+		setVisible( document.all(strDiv), true );
+
+		setVisible( document.all("DETAIL"), true );
+	}
+</script>
+
+<title>Dispatch</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="4" valign="center" class="TableTitleCell" width="25%"><table border="0"
+    width="100%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="50%"><p class="FormHeader">Dispatch</td>
+        <td width="50%"><p class="FormHeader" align="right">{MDB_STAT}</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="center" align="left" class="TableHeaderCell" colspan="4" width="25%">Disapatched
+    Units</td>
+  </tr>
+  <tr>
+    <td valign="center" align="left" style="text-align: left" class="TableCellLabel"
+    width="50%" colspan="4"><small>{MDB_UNT01} {MDB_UNT02} {MDB_UNT03} {MDB_UNT04} {MDB_UNT05}
+    {MDB_UNT06} {MDB_UNT07} {MDB_UNT08} {MDB_UNT09} {MDB_UNT10} {MDB_UNT11} {MDB_UNT12}
+    {MDB_UNT13} {MDB_UNT14} {MDB_UNT15} {MDB_UNT16} {MDB_UNT17} {MDB_UNT18} {MDB_UNT19}
+    {MDB_UNT20} {MDB_UNT21} {MDB_UNT22} {MDB_UNT23} {MDB_UNT24} {MDB_UNT25} {MDB_UNT26}
+    {MDB_UNT27} {MDB_UNT28} {MDB_UNT29} {MDB_UNT30} {MDB_UNT31} {MDB_UNT32} {MDB_UNT33}
+    {MDB_UNT34} {MDB_UNT35} {MDB_UNT36}</small></td>
+  </tr>
+  <tr>
+    <td valign="center" align="left" class="TableHeaderCell" colspan="4" width="25%">Call</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Number</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="25%">{MDB_CALL#}</td>
+    <td valign="center" class="TableCellLabel" align="right" height="26" width="25%"><p
+    class="LabelText">Date/Time</td>
+    <td valign="center" class="TableCellInput" height="26" align="left" width="25%"><script
+    language="JavaScript">
+var sDate = "{MDB_DATE}";
+var sTime = "{MDB_TIME}";
+var dtOccurred = new Date(sDate.substr(4), parseInt(sDate.substr(0,2)) - 1, sDate.substr(2,2), sTime.substr(0,2), sTime.substr(2,2), sTime.substr(4) );
+document.write( dtOccurred.toLocaleString() );
+</script></td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Source</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="25%">{MDB_sourc}</td>
+    <td valign="center" class="TableCellLabel" height="26" width="25%"><p class="LabelText"
+    align="right">Dispatch Priority</td>
+    <td valign="center" class="TableCellInput" height="26" align="left" width="25%">{MDB_prio}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Type</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" colspan="3"
+    width="25%">{MDB_desc}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Location</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" colspan="3"
+    width="25%">{MDB_dloc}</td>
+  </tr>
+  <tr align="middle">
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">City</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="25%">{MDB_dcity}</td>
+    <td valign="center" class="TableCellLabel" height="26" width="25%"><p class="LabelText"
+    align="right">Common</td>
+    <td valign="center" class="TableCellInput" height="26" align="left" width="25%">{MDB_cmn}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Cross
+    Street</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="25%">{MDB_iloc}</td>
+    <td valign="center" class="TableCellLabel" height="26" width="25%"><p class="LabelText"
+    align="right">Map</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="25%">{MDB_mapr}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Narrative</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" colspan="3"
+    width="25%">{MDB_narr}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="left" class="TableHeaderCell" colspan="4" width="25%">Caller</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Name</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" colspan="3"
+    width="25%">{MDB_cnam}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Address</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" colspan="3"
+    width="25%">{MDB_cloc}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">City</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="25%">{MDB_ccity}</td>
+    <td valign="center" class="TableCellLabel" height="26" width="25%"><p class="LabelText"
+    align="right">Phone</td>
+    <td valign="center" class="TableCellInput" height="26" align="left" width="25%">{MDB_cphn}</td>
+  </tr>
+</table>
+<div id="VehicleTable" style="DISPLAY: none">
+
+<table border="0" width="100%">
+  <tr>
+    <td valign="center" align="left" class="TableHeaderCell" colspan="2" width="25%">Vehicle</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">License</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="75%">{MDB_lic}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">State</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="75%">{MDB_lis}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Yr</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="75%">{MDB_vyr}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Make</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="75%">{MDB_vma}</td>
+  </tr>
+  <tr>
+    <td valign="center" align="right" class="TableCellLabel" width="25%"><p class="LabelText">Color</td>
+    <td valign="center" class="TableCellInput" align="left" height="26" width="75%">{MDB_clr1}
+    {MDB_clr2}</td>
+  </tr>
+</table>
+</div><div id="DETAIL" style="DISPLAY: inline">
+
+<table border="0" width="100%">
+  <tr>
+    <td valign="center" align="left" class="TableHeaderCell">Dispatch Detail</td>
+  </tr>
+  <tr>
+    <td valign="center" align="left" class="TableCellInput" width="100%"><div id="BTN1"><p
+    class="ResponseLabel"><strong><div id="BTN1_NAME">{MDB_BTN1_NAME}</div></strong></p>
+    <pre><div id="BTN1_VALUE">{MDB_BTN1_VALUE}</div></pre>
+    </div><div id="BTN2"><p class="ResponseLabel"><strong><div id="BTN2_NAME">{MDB_BTN2_NAME}</div></strong></p>
+    <pre><div id="BTN2_VALUE">{MDB_BTN2_VALUE}</div></pre>
+    </div><div id="BTN3"><p class="ResponseLabel"><strong><div id="BTN3_NAME">{MDB_BTN3_NAME}</div></strong></p>
+    <pre><div id="BTN3_VALUE">{MDB_BTN3_VALUE}</div></pre>
+    </div><div id="BTN4"><p class="ResponseLabel"><strong><div id="BTN4_NAME">{MDB_BTN4_NAME}</div></strong></p>
+    <pre><div id="BTN4_VALUE">{MDB_BTN4_VALUE}</div></pre>
+    </div><div id="BTN5"><p class="ResponseLabel"><strong><div id="BTN5_NAME">{MDB_BTN5_NAME}</div></strong></p>
+    <pre><div id="BTN5_VALUE">{MDB_BTN5_VALUE}</div></pre>
+    </div><div id="BTN6"><p class="ResponseLabel"><strong><div id="BTN6_NAME">{MDB_BTN6_NAME}</div></strong></p>
+    <pre><div id="BTN6_VALUE">{MDB_BTN6_VALUE}</div></pre>
+    </div><div id="BTN7"><p class="ResponseLabel"><strong><div id="BTN7_NAME">{MDB_BTN7_NAME}</div></strong></p>
+    <pre><div id="BTN7_VALUE">{MDB_BTN7_VALUE}</div></pre>
+    </div><div id="BTN8"><p class="ResponseLabel"><strong><div id="BTN8_NAME">{MDB_BTN8_NAME}</div></strong></p>
+    <pre><div id="BTN8_VALUE">{MDB_BTN8_VALUE}</div></pre>
+    </div><div id="BTN9"><p class="ResponseLabel"><strong><div id="BTN9_NAME">{MDB_BTN9_NAME}</div></strong></p>
+    <pre><div id="BTN9_VALUE">{MDB_BTN9_VALUE}</div></pre>
+    </div><div id="BTN10"><p class="ResponseLabel"><strong><div id="BTN10_NAME">{MDB_BTN10_NAME}</div></strong></p>
+    <pre><div id="BTN10_VALUE">{MDB_BTN10_VALUE}</div></pre>
+    </div><div id="BTN11"><p class="ResponseLabel"><strong><div id="BTN11_NAME">{MDB_BTN11_NAME}</div></strong></p>
+    <pre><div id="BTN11_VALUE">{MDB_BTN11_VALUE}</div></pre>
+    </div><div id="BTN12"><p class="ResponseLabel"><strong><div id="BTN12_NAME">{MDB_BTN12_NAME}</div></strong></p>
+    <pre><div id="BTN12_VALUE">{MDB_BTN12_VALUE}</div></pre>
+    </div><div id="BTN13"><p class="ResponseLabel"><strong><div id="BTN13_NAME">{MDB_BTN13_NAME}</div></strong></p>
+    <pre><div id="BTN13_VALUE">{MDB_BTN13_VALUE}</div></pre>
+    </div><div id="BTN14"><p class="ResponseLabel"><strong><div id="BTN14_NAME">{MDB_BTN14_NAME}</div></strong></p>
+    <pre><div id="BTN14_VALUE">{MDB_BTN14_VALUE}</div></pre>
+    </div><div id="BTN15"><p class="ResponseLabel"><strong><div id="BTN15_NAME">{MDB_BTN15_NAME}</div></strong></p>
+    <pre><div id="BTN15_VALUE">{MDB_BTN15_VALUE}</div></pre>
+    </div></td>
+  </tr>
+</table>
+</div><div id="DMVRESP" style="DISPLAY: none">
+
+<table border="0" cellspacing="1" cellpadding="0">
+  <tr>
+    <td class="TableHeaderCell" colspan="2">Original Response Data</td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CALL#</font></td>
+    <td><font face="Courier New">{MDB_CALL#}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">STAT</font></td>
+    <td><font face="Courier New">{MDB_STAT}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">DATE</font></td>
+    <td><font face="Courier New">{MDB_DATE}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">TIME</font></td>
+    <td><font face="Courier New">{MDB_TIME}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">SOURC</font></td>
+    <td><font face="Courier New">{MDB_SOURC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">UNIC</font></td>
+    <td><font face="Courier New">{MDB_UNIC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">PRIORITY&nbsp;&nbsp; </font></td>
+    <td><font face="Courier New">{MDB_PRIORITY}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">DESC</font></td>
+    <td><font face="Courier New">{MDB_DESC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">NARR</font></td>
+    <td><font face="Courier New">{MDB_NARR}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">MAPR</font></td>
+    <td><font face="Courier New">{MDB_MAPR}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">DLOC</font></td>
+    <td><font face="Courier New">{MDB_DLOC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">DCITY</font></td>
+    <td><font face="Courier New">{MDB_DCITY}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CMN</font></td>
+    <td><font face="Courier New">{MDB_CMN}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">ILOC</font></td>
+    <td><font face="Courier New">{MDB_ILOC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CNAM</font></td>
+    <td><font face="Courier New">{MDB_CNAM}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CLOC</font></td>
+    <td><font face="Courier New">{MDB_CLOC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CCITY</font></td>
+    <td><font face="Courier New">{MDB_CCITY}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CPHN</font></td>
+    <td><font face="Courier New">{MDB_CPHN}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">LIC</font></td>
+    <td><font face="Courier New">{MDB_LIC}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">LIS</font></td>
+    <td><font face="Courier New">{MDB_LIS}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">VMA</font></td>
+    <td><font face="Courier New">{MDB_VMA}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">VMO</font></td>
+    <td><font face="Courier New">{MDB_VMO}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">VYR</font></td>
+    <td><font face="Courier New">{MDB_VYR}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CLR1</font></td>
+    <td><font face="Courier New">{MDB_CLR1}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">CLR2</font></td>
+    <td><font face="Courier New">{MDB_CLR2}</font></td>
+  </tr>
+  <tr>
+    <td><font face="Courier New">DMSG</font></td>
+    <td><font face="Courier New">{MDB_DMSG}</font></td>
+  </tr>
+</table>
+</div>
+
+<p align="left"><input type="button" ID="helptext" onclick="return helptext_onclick()"
+value="Show Orginal Response"></p>
+
+<p>
+<object id="Subscriber" classid="clsid:A31ACEDB-FBDD-11D2-A877-006097045B31">
+</object>
+</p>
+</body>
+</html>

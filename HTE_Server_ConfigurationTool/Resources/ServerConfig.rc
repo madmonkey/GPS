@@ -1,0 +1,16 @@
+0                       ICON                    "tools.ico"
+1                       ICON                    "web.ico"
+2                       ICON                    "web2.ico"
+// String Table
+
+STRINGTABLE 
+BEGIN
+    100                    "Communitas © Server Maintenance Tool"
+END
+
+#define CREATEPROCESS_MANIFEST_RESOURCE_ID 1
+#define RT_MANIFEST                     24
+#define CONTROL_PANEL_RESOURCE_ID       123
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST             "ServerConfig.exe.manifest"
+

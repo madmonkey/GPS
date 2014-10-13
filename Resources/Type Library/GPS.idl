@@ -1,0 +1,265 @@
+import "unknwn.idl";
+[
+  uuid(A34AFFA6-5123-4853-8207-571194DE2309),
+  version(1.1),
+  helpstring("GPS Process Library")
+]
+library HTE_GPS
+{
+    importlib("STDOLE2.TLB");
+	interface Process;
+	interface Processes;
+	interface Application;
+	interface AppStatus;
+	interface PropertyPage;
+	interface PropPageCallback;
+	
+	typedef 
+		[
+			uuid(BC8EEF2E-FE12-4ed1-B763-B1C87CCA4C69),
+			helpstring("Supported GPS Message Type"),
+		]
+		[v1_enum] enum GPS_MESSAGING_TYPES
+		{
+			GPS_TYPE_0 = 0,
+			GPS_TYPE_1= 1,
+			GPS_TYPE_2 = 2,
+			GPS_TYPE_3= 3,
+			GPS_TYPE_4= 4,
+		} GPS_MESSAGING_TYPES;
+	
+	typedef 
+		[
+			uuid(CC3C29EA-3AB9-46a9-BF63-AF940B559756),
+			helpstring("Processor Status Codes"),
+		]
+		[v1_enum] enum GPS_PROCESSOR_STATUS
+		{
+			GPS_STAT_UNKNOWN = 0,
+			GPS_STAT_UNINITIALIZED= 1,
+			GPS_STAT_INITIALIZED = 2,
+			GPS_STAT_BAD_INTERFACE = 3,
+			GPS_STAT_HOST_UNSUPPORTED = 4,
+			GPS_STAT_ERROR = 5,
+			GPS_STAT_WARNING = 6,
+			GPS_STAT_READYANDWILLING= 7,
+		} GPS_PROCESSOR_STATUS;
+
+	typedef 
+		[
+			uuid(6195CA7E-CE44-4020-A207-CA1442A0F170),
+			helpstring("Message Status Codes"),
+		]
+		[v1_enum] enum GPS_MESSAGE_STATUS
+		{
+			GPS_MSG_PROCESSED = 0,
+			GPS_MSG_PROCESSED_WARNING= 1,
+			GPS_MSG_PROCESSED_ERROR= 2,
+			GPS_MSG_ERROR = 3,
+		} GPS_MESSAGE_STATUS;
+
+		typedef 
+		[
+			uuid(7AE70880-DB78-41f5-BEB0-C72970C59A00),
+			helpstring("Log Detail Level"),
+		]
+		[v1_enum] enum GPS_LOG_DETAIL
+		{
+			GPS_LOG_VERBOSE = 8,
+			GPS_LOG_INFORMATION= 4,
+			GPS_LOG_WARNING= 2,
+			GPS_LOG_ERROR = 1,
+		} GPS_LOG_DETAIL;
+
+		typedef 
+		[
+			uuid(73EADB44-4CF7-4677-A860-EBE50408836B),
+			helpstring("Log Source Data"),
+		]
+		[v1_enum] enum GPS_LOG_SOURCE
+		{
+			GPS_SOURCE_STRING = 0,
+			GPS_SOURCE_BINARY = 1,
+			GPS_SOURCE_XML = 2,
+		} GPS_LOG_SOURCE;
+
+		typedef 
+		[
+			uuid(E0F59304-B8B6-4765-BB96-1D25A43A3162),
+			helpstring("Host Status Codes"),
+		]
+		[v1_enum] enum GPS_HOST_STATUS
+		{
+			GPS_HOST_UNINITIALIZED = 0,
+			GPS_HOST_ERROR = 1,
+			GPS_HOST_WARNING= 2,
+			GPS_HOST_GROOVY = 3,
+		} GPS_HOST_STATUS;
+		
+
+		typedef 
+		[
+			uuid(484BA937-3CA7-4c2c-91BE-C012303B9DE8),
+			helpstring("Current GPS Configuration."),
+		]
+		struct GPSConfiguration {
+			[helpstring("Current GPS configuration.")] 
+			GPS_MESSAGING_TYPES GPSType;
+			[helpstring("Start of message indicator.")]
+			BSTR SOM;
+			[helpstring("End of message indicator.")]
+			BSTR EOM;
+			[helpstring("Description of message type.")]
+			BSTR Desc;
+		}GPSConfiguration;
+
+	[
+      	uuid(77DCD31F-BB7F-44ed-8D53-08C3F921684D),
+      	helpstring("Global Positioning Message that is transformed by process."),
+		oleautomation
+		
+	]
+		interface GPSMessage : IUnknown{
+			[helpstring("Message status")] 
+			[propget] HRESULT MessageStatus([out, retval] GPS_MESSAGE_STATUS* msgStatus);
+			[propput] HRESULT MessageStatus([in] GPS_MESSAGE_STATUS* msgStatus);
+			[helpstring("Type of message")]
+			[propget] HRESULT Type([out, retval] GPS_MESSAGING_TYPES* msgType);
+			[propput] HRESULT Type([in] GPS_MESSAGING_TYPES* msgType);
+			[helpstring("Message contents")]
+			[propget] HRESULT rawMessage([out, retval] BSTR* msg);
+			[propput] HRESULT rawMessage([in] BSTR* msg);
+			[helpstring("Identification placeholder")]
+			[propget] HRESULT Entity([out, retval] BSTR* ent);
+			[propput] HRESULT Entity([in] BSTR* ent);
+
+		}
+    
+
+
+    [
+      	uuid(8A8F45A8-745F-47e5-9E54-D2D53B3D7338),
+      	helpstring("Each Process component must contain one class that implements the Process interface."),
+		oleautomation
+    ]
+    interface Process : IDispatch {
+		[helpstring("The Process host will call Connect passing an Application object. The Process may keep references to it provided the Process destroys all Application references when Disconnect is called.")]
+		HRESULT Connect ([in] Processes* parentProcess, [in] BSTR cookie);
+		[helpstring("The Process host will call Disconnect when the application must shut down. The Process must destroy all references to the host object passed in the connect method.")]
+		HRESULT Disconnect();
+		[helpstring("The Process host will call ProcessMessage to request the services of the Process object.")]
+		HRESULT ProcessMessage([in] GPSMessage* PropData);
+		[helpstring("Returns the Friendly display name of the Process.")]
+		[propget] HRESULT FriendlyName ([out, retval] BSTR* PropData );
+		[helpstring("Returns the statuscode for the instance of a particular Process.")]
+		[propget] HRESULT Status([out, retval] GPS_PROCESSOR_STATUS* PropData );
+		[propput] HRESULT Status([in] GPS_PROCESSOR_STATUS* PropData );
+		[helpstring("What version of the host Application was this designed against.")]
+		[propget] HRESULT HostVersion([out, retval] BSTR* PropData);
+		[helpstring("Returns the XML settings for a particular process instance.")]
+		[propget] HRESULT Settings([out, retval] BSTR* XMLDOMNode);
+		[propput] HRESULT Settings([in] BSTR XMLDOMNode);
+		[helpstring("Returns an object that implements the HTE_GPS.PropertyPage interface.")]
+		[propget] HRESULT PropertyPage([out, retval] PropertyPage** currentPage);
+    };
+
+	[
+		uuid(AA7C5528-8E45-427c-8AE2-56FFBCC60E7C),
+		helpstring("Processes component manages instances of individual process interfaces."),
+		nonextensible,
+		oleautomation
+    ]
+    interface Processes : IUnknown {
+		[helpstring("Callback when finished with GPS Message.")]
+		HRESULT ProcessComplete([in] GPSMessage* Message, [in] Process** ActiveInstance);
+		[helpstring("Callback when process status changes.")]
+		HRESULT StatusChanged([in] GPS_PROCESSOR_STATUS StatusCode, [in] Process** ActiveInstance);
+		[helpstring("Logs processor happenings from the application's standard logging routine.")]
+		HRESULT Log([in] Process** ActiveInstance, [in] BSTR Object, [in] BSTR Method,[in, optional, defaultvalue("")] BSTR Message, [in, optional, defaultvalue(8)] GPS_LOG_DETAIL  LogDetail,[in, optional, defaultvalue(0)] long  ErrorID, [in, optional, defaultvalue("")] BSTR LogSource,[in, optional, defaultvalue(0)] GPS_LOG_SOURCE  LogSourceDetail);
+		[helpstring("Callback when connection/initialization completed.")]
+		HRESULT Connected([in] Process** ActiveInstance, [in] BSTR cookie);
+		[helpstring("Callback raised when properties changed and need to be persisted.")]
+		HRESULT PropertiesChanged([in] BSTR* XMLDOMNode, [in] Process** ActiveInstance);
+		[helpstring("Inquiry about how messages coming into participating route are formatted.")]
+		HRESULT InboundType([in] Process** ActiveInstance, [out, retval] GPS_MESSAGING_TYPES* GPSType);
+		[helpstring("Get property interface for a given instance of a process.")]
+		HRESULT PropertyPage([in] BSTR CurrentRoute, [out,retval]PropertyPage** currentPage);
+		[helpstring("Get process status for a given instance.")]
+		HRESULT ProcessStatus([in] BSTR CurrentRoute, [out, retval] GPS_PROCESSOR_STATUS* PropData);
+	};
+	
+    [
+		uuid(6B80DA82-130E-4b7a-AE16-0C67475AE4E6),
+		helpstring("The hosting application provides services to any Process through the Application interface."),
+		nonextensible,
+		oleautomation
+    ]
+    interface Application : IUnknown {
+		[helpstring("Versioning of Host Application.")]
+		HRESULT IsVersionAtLeast([in] BSTR Version, [out, retval] VARIANT_BOOL* YesOrNo);
+		[helpstring("Status of the Host Application.")]
+		HRESULT StatusChange([in] GPS_HOST_STATUS* StatusCode);
+		[propget] HRESULT Status([out, retval] GPS_HOST_STATUS* StatusCode);
+		[helpstring("Callback for host status changes.")]
+		HRESULT StatusCallback([in] AppStatus** Callback);
+		[helpstring("Logs processes happenings from the application's standard logging routine.")]
+		HRESULT Log([in] BSTR Object, [in] BSTR Method,[in, optional, defaultvalue("")] BSTR Message, [in, optional, defaultvalue(8)] GPS_LOG_DETAIL  LogDetail,[in, optional, defaultvalue(0)] long  ErrorID, [in, optional, defaultvalue("")] BSTR LogSource,[in, optional, defaultvalue(0)] GPS_LOG_SOURCE  LogSourceDetail);
+		[helpstring("Call before the application is released.")]
+		HRESULT Cleanup();
+		[helpstring("Processed Message.")]
+		HRESULT Processed([in] GPSMessage* Message, [in] BSTR CurrentRoute);
+		[helpstring("Get property interface for a given instance of a process.")]
+		HRESULT PropertyPage([in] BSTR CurrentRoute, [out,retval]PropertyPage** currentPage);
+		[helpstring("Get process status for a given instance.")]
+		HRESULT ProcessStatus([in] BSTR CurrentRoute, [out, retval] GPS_PROCESSOR_STATUS* PropData);
+		[propget] HRESULT ShowLastMessage([out, retval] VARIANT_BOOL* YesOrNo);
+		[propput] HRESULT ShowLastMessage([in] VARIANT_BOOL* YesOrNo);
+	};
+	[
+		uuid(EF1FFF5D-DFE4-4505-AF20-D2EE90CEA2E7),
+		helpstring("The callback for status changes in host application."),
+		oleautomation
+    ]
+	interface AppStatus: IUnknown{
+			[helpstring("Status of the Host Application.")]
+			HRESULT StatusChange([in] GPS_HOST_STATUS* StatusCode);
+			[helpstring("Last Processed Message.")]
+			HRESULT Processed([in] GPSMessage* Message, [in] BSTR CurrentRoute);
+	};
+	
+	[
+		uuid(0326F28E-8168-4601-95C4-8D22E63D758E),
+		helpstring("The common interface used to interact with property pages for a process."),
+		nonextensible,
+		object,
+		oleautomation
+    ]
+    interface PropertyPage: IUnknown {
+		[helpstring("Programatic identifier of the property page.")]
+		[propget] HRESULT Name([out, retval] BSTR* PropData );
+		[propget] HRESULT Settings([out, retval] BSTR* XMLDOMNode);
+		[propput] HRESULT Settings([in] BSTR XMLDOMNode);
+		[propget] HRESULT Changed([out, retval] VARIANT_BOOL* YesOrNo);
+		[helpstring("Save current configuration.")]
+		HRESULT SaveChanges([out, retval] VARIANT_BOOL* YesOrNo);
+		[helpstring("Interface marshaller for property callbacks.")]
+		[propput] HRESULT PropertyCallback([in] PropPageCallback** Callback);
+		[propget] HRESULT PropertyCallback([out,retval] PropPageCallback** Callback);
+		[helpstring("Notification for cleanup.")]
+		HRESULT Exit();
+		[propget] HRESULT LicenseKey([out, retval] BSTR* PropData );
+	};
+	[
+		uuid(9BDD3675-A3A2-43df-8F65-DC418A9B13DF),
+		helpstring("The callback used to notify a process to persist changes."),
+		nonextensible,
+		object,
+		oleautomation
+    ]
+	interface PropPageCallback:IUnknown{
+		[helpstring("Save current configuration.")]
+		HRESULT SaveChanges([in] BSTR XMLDOMNode, [out, retval] VARIANT_BOOL* YesOrNo);
+		[helpstring("Notification for cleanup.")]
+		HRESULT Exit();
+	}
+}

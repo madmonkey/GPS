@@ -1,0 +1,149 @@
+/* --------------------------------------------------------
+ * HTE_PubData Interface Definitions
+ * $Workfile: HTE_PubData.idl $
+ * 
+ * Defines the external interfaces of the COM Objects
+ *
+ * This file will be processed by the MIDL tool to
+ * produce the type library (HTE_PubData.tlb) and marshalling code.
+ *
+ * Copyright © 1999 HTE-UCS, Inc.  All Rights Reserved.
+ * --------------------------------------------------------
+ * Last Modified: 
+ * $Revision: 3 $
+ * $Author: Steve $
+ * $Modtime: 8/03/99 6:01p $
+ * --------------------------------------------------------
+ * $History: HTE_PubData.idl $ 
+ * 
+ * *****************  Version 3  *****************
+ * User: Steve        Date: 8/03/99    Time: 6:10p
+ * Updated in $/Utilities/Misc/HTE_PubData
+ * SubscriberControl was not properly aggregating the contained
+ * CSubscriber which cause a memory leak and a crash when firing e.vents
+ * Fixed control to blind aggregate CSubscriber and also aggregate the
+ * events ising AggCP.h.
+ * 
+ * *****************  Version 2  *****************
+ * User: Steve        Date: 6/28/99    Time: 6:18p
+ * Updated in $/Utilities/Misc/HTE_PubData
+ * Added Timeout property to interface (defaults to 5 sec.)
+ * Changed SendMessage to SendMessageTimeout to avoid hung applications
+ * 
+ * *****************  Version 1  *****************
+ * User: Steve        Date: 4/27/99    Time: 10:19a
+ * Created in $/Utilities/Misc/HTE_PubData
+ * --------------------------------------------------------
+ */
+
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	
+[
+	uuid(DCB36981-F9AE-11D2-A877-006097045B31),
+	version(1.0),
+	helpstring("HTE-UCS PubData Synchronous Broadcast Library")
+]
+library HTE_PubData
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(DCB36992-F9AE-11D2-A877-006097045B31),
+		dual,
+		helpstring("IPublisher Interface"),
+		pointer_default(unique)
+	]
+	interface IPublisher : IDispatch
+	{
+		[id(1), helpstring("Broadcasts the passed data to all Subscribers.")] 
+		HRESULT SendString([in] BSTR Tag, [in] BSTR Data);
+
+		[propget, id(2), helpstring("Topic defines the channel of communication between publishers and subscribers. You mush be on the same Topic to hear a publisher.")] 
+		HRESULT Topic([out, retval] BSTR *pVal);
+
+		[propput, id(2), helpstring("Topic defines the channel of communication between publishers and subscribers. You mush be on the same Topic to hear a publisher.")] 
+		HRESULT Topic([in] BSTR newVal);
+
+		[propget, id(3), helpstring("Defines how long to wait for each publisher to acknowledge the message.")] 
+		HRESULT Timeout([out, retval] long *pVal);
+
+		[propput, id(3), helpstring("Defines how long to wait for each publisher to acknowledge the message.")] 
+		HRESULT Timeout([in] long newVal);
+	};
+
+	
+	////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(A31ACED3-FBDD-11D2-A877-006097045B31),
+		dual,
+		helpstring("ISubscriber Interface"),
+		pointer_default(unique)
+	]
+	interface ISubscriber : IDispatch
+	{
+		[propget, id(1), helpstring("Topic defines the channel of communication between publishers and subscribers. You mush be on the same Topic to hear a publisher.")] 
+		HRESULT Topic([out, retval] BSTR *pVal);
+
+		[propput, id(1), helpstring("Topic defines the channel of communication between publishers and subscribers. You mush be on the same Topic to hear a publisher.")] 
+		HRESULT Topic([in] BSTR newVal);
+	};
+
+	
+	////////////////////////////////////////////////////////////////
+	[
+		uuid(DCB36993-F9AE-11D2-A877-006097045B31),
+		helpstring("HTE_PubData.Publisher Class")
+	]
+	coclass Publisher
+	{
+		[default] interface IPublisher;
+	};
+
+
+
+	////////////////////////////////////////////////////////////////
+	[
+		uuid(A31ACED5-FBDD-11D2-A877-006097045B31),
+		helpstring("HTE_PubData._ISubscriber2Events Interface")
+	]
+	dispinterface _ISubscriberEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("OnReceiveString is fired when a Publisher object send string data to Subscribers.")] 
+		HRESULT OnReceiveString([in] BSTR Tag, [in] BSTR Data);
+	};
+	
+
+	////////////////////////////////////////////////////////////////
+	[
+		uuid(A31ACED4-FBDD-11D2-A877-006097045B31),
+		helpstring("HTE_PubData.Subscriber Class")
+	]
+	coclass Subscriber
+	{
+		[default] interface ISubscriber;
+		[default, source] dispinterface _ISubscriberEvents;
+	};
+	
+	
+	
+	////////////////////////////////////////////////////////////////
+	[
+		uuid(A31ACEDB-FBDD-11D2-A877-006097045B31),
+		helpstring("HTE_PubData.SubscriberControl Class - Use when in IE in order to sink events")
+	]
+	coclass SubscriberControl
+	{
+		[default] interface ISubscriber;
+		[default, source] dispinterface _ISubscriberEvents;
+	};
+
+};

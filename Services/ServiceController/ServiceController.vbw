@@ -1,0 +1,6 @@
+frmServiceControl = 96, 65, 774, 663, Z, 22, 29, 700, 627, C
+modNTServiceControl = 44, 58, 833, 656, 
+modApplication = 66, 87, 744, 685, 
+modServiceConstants = 110, 145, 788, 743, 
+Mutex = 0, 0, 0, 0, C
+modCleanup = 110, 145, 860, 747, 

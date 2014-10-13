@@ -1,0 +1,26 @@
+HKCR
+{
+	HTE_PubData.Publisher.1 = s 'Publisher Class'
+	{
+		CLSID = s '{DCB36993-F9AE-11D2-A877-006097045B31}'
+	}
+	HTE_PubData.Publisher = s 'Publisher Class'
+	{
+		CLSID = s '{DCB36993-F9AE-11D2-A877-006097045B31}'
+		CurVer = s 'HTE_PubData.Publisher.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DCB36993-F9AE-11D2-A877-006097045B31} = s 'Publisher Class'
+		{
+			ProgID = s 'HTE_PubData.Publisher.1'
+			VersionIndependentProgID = s 'HTE_PubData.Publisher'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{DCB36981-F9AE-11D2-A877-006097045B31}'
+		}
+	}
+}

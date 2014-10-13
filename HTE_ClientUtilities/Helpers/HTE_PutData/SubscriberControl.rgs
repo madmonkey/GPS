@@ -1,0 +1,34 @@
+HKCR
+{
+	HTE_PubData.SubscriberControl.1 = s 'SubscriberControl Class'
+	{
+		CLSID = s '{A31ACEDB-FBDD-11D2-A877-006097045B31}'
+	}
+	HTE_PubData.SubscriberControl = s 'SubscriberControl Class'
+	{
+		CLSID = s '{A31ACEDB-FBDD-11D2-A877-006097045B31}'
+		CurVer = s 'HTE_PubData.SubscriberControl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A31ACEDB-FBDD-11D2-A877-006097045B31} = s 'SubscriberControl Class'
+		{
+			ProgID = s 'HTE_PubData.SubscriberControl.1'
+			VersionIndependentProgID = s 'HTE_PubData.SubscriberControl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 105'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '132497'
+			}
+			'TypeLib' = s '{DCB36981-F9AE-11D2-A877-006097045B31}'
+			'Version' = s '1.0'
+		}
+	}
+}

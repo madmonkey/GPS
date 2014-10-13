@@ -1,0 +1,17 @@
+frmMain = 0, 0, 0, 0, C, 46, 46, 730, 417, C
+modAppMutex = 0, 0, 0, 0, C
+frmSysTray = 0, 0, 0, 0, C, 92, 92, 776, 463, C
+basCommon = 0, 0, 0, 0, C
+modHexDump = 0, 0, 0, 0, C
+frmProperties = 0, 0, 0, 0, C, 115, 115, 799, 486, C
+basUtilitiesErrorHandling = 0, 0, 0, 0, C
+modFlatCombo = 0, 0, 0, 0, C
+stringBuilder = 0, 0, 0, 0, C
+cApplication = 23, 23, 774, 394, 
+cRoute = 0, 0, 0, 0, C
+cProcess = 0, 0, 0, 0, C
+cProcesses = 0, 0, 0, 0, C
+modCleanup = 0, 0, 0, 0, C
+modXPTheme = 0, 0, 0, 0, C
+modDetectService = 0, 0, 0, 0, C
+modServiceConstants = 0, 0, 0, 0, C

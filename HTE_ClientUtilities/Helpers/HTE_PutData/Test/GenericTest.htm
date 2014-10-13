@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Generic HTE_PubData Test</title>
+<script FOR="window" EVENT="onload" LANGUAGE="JScript"> 
+	Subscriber.Topic = "HTE_MDB";
+</script>
+<script FOR="Subscriber"
+EVENT="OnReceiveString(Tag,Data)" LANGUAGE="JScript"> 
+	window.alert( Data, Tag );
+</script>
+</head>
+
+<body>
+
+<p>
+<object id="Subscriber" classid="clsid:A31ACEDB-FBDD-11D2-A877-006097045B31">
+</object>
+</p>
+
+<h1>Generic HTE_PubData Test</h1>
+
+<p>A message box will appear each time a broadcast on the topic HTE_MDB is detected.</p>
+</body>
+</html>

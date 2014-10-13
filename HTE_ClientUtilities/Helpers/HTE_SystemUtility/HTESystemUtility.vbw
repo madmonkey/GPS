@@ -1,0 +1,14 @@
+SysUtility = 52, 14, 820, 627, 
+modUtility = -5, 14, 897, 628, 
+basUtilitiesErrorHandling = 66, 66, 941, 423, 
+modCallback = 110, 110, 734, 556, C
+modDialogHook = 132, 132, 683, 664, C
+CommonDialog = 217, 56, 768, 588, 
+Memory = 198, 198, 749, 730, C
+enhCommonDialog = 154, 154, 705, 686, C
+IPersistPicture = 229, 209, 746, 827, 
+PersistPicture = 197, 176, 793, 794, 
+modFileRoutines = 242, 242, 759, 860, C
+Registry = 44, 58, 907, 538, 
+GUID = 132, 132, 810, 640, 
+modControlSafety = 110, 145, 862, 747, 

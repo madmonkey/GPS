@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<!--If you are the application as a Host/server you will need to "reconfigure" the types of messages you are listening for !-->
+<configuration><GENERAL><TYPES><MCS SOM="02" EOM="0304">0</MCS></TYPES></GENERAL></configuration>

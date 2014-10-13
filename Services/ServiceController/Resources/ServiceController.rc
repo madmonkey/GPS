@@ -1,0 +1,15 @@
+0                       ICON                    "tools.ico"
+
+// String Table
+
+STRINGTABLE 
+BEGIN
+    100                    "Modular GPS Administration Services"
+END
+
+#define CREATEPROCESS_MANIFEST_RESOURCE_ID 1
+#define RT_MANIFEST                     24
+#define CONTROL_PANEL_RESOURCE_ID       123
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST             "ServiceController.exe.manifest"
+

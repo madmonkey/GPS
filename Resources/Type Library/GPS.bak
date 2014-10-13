@@ -1,0 +1,181 @@
+
+[
+  uuid(A34AFFA6-5123-4853-8207-571194DE2309),
+  version(1.0),
+  helpstring("GPS Process Library")
+]
+library HTE_GPS
+{
+    importlib("STDOLE2.TLB");
+
+    interface Process;
+	//interface Processes;
+	interface Application;
+	interface GPSMessage;
+	interface PropertyPage;
+	typedef 
+		[
+			uuid(CC3C29EA-3AB9-46a9-BF63-AF940B559756),
+			helpstring("Processor Status Codes"),
+		]
+		[v1_enum] enum GPS_PROCESSOR_STATUS
+		{
+			GPS_STAT_UNKNOWN = 0,
+			GPS_STAT_UNINITIALIZED= 1,
+			GPS_STAT_INITIALIZED = 2,
+			GPS_STAT_BAD_INTERFACE = 3,
+			GPS_STAT_HOST_UNSUPPORTED = 4,
+			GPS_STAT_ERROR = 5,
+			GPS_STAT_WARNING = 6,
+			GPS_STAT_READYANDWILLING= 7,
+		} GPS_PROCESSOR_STATUS;
+
+	typedef 
+		[
+			uuid(6195CA7E-CE44-4020-A207-CA1442A0F170),
+			helpstring("Message Status Codes"),
+		]
+		[v1_enum] enum GPS_MESSAGE_STATUS
+		{
+			GPS_MSG_PROCESSED = 0,
+			GPS_MSG_PROCESSED_WARNING= 1,
+			GPS_MSG_PROCESSED_ERROR= 2,
+			GPS_MSG_ERROR = 3,
+		} GPS_MESSAGE_STATUS;
+
+		typedef 
+		[
+			uuid(7AE70880-DB78-41f5-BEB0-C72970C59A00),
+			helpstring("Log Detail Level"),
+		]
+		[v1_enum] enum GPS_LOG_DETAIL
+		{
+			GPS_LOG_VERBOSE = 8,
+			GPS_LOG_INFORMATION= 4,
+			GPS_LOG_WARNING= 2,
+			GPS_LOG_ERROR = 1,
+		} GPS_LOG_DETAIL;
+
+		typedef 
+		[
+			uuid(73EADB44-4CF7-4677-A860-EBE50408836B),
+			helpstring("Log Source Data"),
+		]
+		[v1_enum] enum GPS_LOG_SOURCE
+		{
+			GPS_SOURCE_STRING = 0,
+			GPS_SOURCE_BINARY = 1,
+			GPS_SOURCE_XML = 2,
+		} GPS_LOG_SOURCE;
+
+		typedef 
+		[
+			uuid(E0F59304-B8B6-4765-BB96-1D25A43A3162),
+			helpstring("Host Status Codes"),
+		]
+		[v1_enum] enum GPS_HOST_STATUS
+		{
+			GPS_HOST_UNINITIALIZED = 0,
+			GPS_HOST_ERROR = 1,
+			GPS_HOST_WARNING= 2,
+			GPS_HOST_GROOVY = 3,
+		} GPS_HOST_STATUS;
+
+    [
+      	uuid(8A8F45A8-745F-47e5-9E54-D2D53B3D7338),
+      	helpstring("Each Process component must contain one class that implements the Process interface."),
+      	nonextensible,
+		oleautomation,
+    ]
+    interface Process : IUnknown {
+		[helpstring("The Process host will call Connect passing an Application object. The Process may keep references to it provided the Process destroys all Application references when Disconnect is called.")]
+		HRESULT Connect   ([in] Application* HostApp );
+		[helpstring("The Process host will call Disconnect when the application must shut down. The Process must destroy all references to the Application object passed in the Connect method.")]
+		HRESULT Disconnect();
+		[helpstring("The Process host will call Reload to force the Process to reinitialize its configuration parameters.")]
+		HRESULT Reload();
+		[helpstring("The Process host will call ProcessMessage to request the services of the Process object.")]
+		HRESULT ProcessMessage([in] GPSMessage* PropData);
+		[helpstring("Returns either Nothing or the Icon which represents the services of the Process.")]
+		[propget] HRESULT Icon ([out, retval] IDispatch** PropData );
+		[helpstring("Returns the display name of the Process.")]
+		[propget] HRESULT Name ([out, retval] BSTR* PropData );
+		[helpstring("Returns the unique identifier for the instance of the particular Process.")]
+		[propget] HRESULT ID([out, retval] BSTR* PropData );
+		[propput] HRESULT ID([in] BSTR* PropData );
+		[helpstring("Returns the statuscode for the instance of a particular Process.")]
+		[propget] HRESULT Status([out, retval] GPS_PROCESSOR_STATUS* PropData );
+		[propput] HRESULT Status([in] GPS_PROCESSOR_STATUS* PropData );
+		[helpstring("What version of the host Application was this designed against.")]
+		[propget] HRESULT HostVersion([out, retval] BSTR* PropData);
+		[helpstring("Returns the description of the Process.")]
+		[propget] HRESULT Description ([out, retval] BSTR* PropData );
+		[helpstring("Returns the XML settings for a particular process instance.")]
+		[propget] HRESULT Settings([out, retval] IUnknown* SettingsNode);
+		[propput] HRESULT Settings([in] BSTR* rootName );
+		[helpstring("Gets the settings interface to create for a Process.")]
+		[propget] HRESULT PropertyPage([out, retval] BSTR* PropData );
+				
+    };
+	 [
+      	uuid(DF5E33F0-A5D4-45da-BC33-659F3AA7C1F5),
+      	helpstring("Each Process component's configuration page."),
+      	nonextensible,
+		oleautomation,
+    ]
+    interface PropertyPage : IUnknown {
+		[helpstring("Gets the settings node for a Process instance.")]
+		[propget] HRESULT Settings([out, retval] BSTR* PropData );
+
+	}
+
+	/*[
+      	uuid(BC07F422-8A4D-41de-AA0C-88A462F66621),
+      	helpstring("The Processes component is a collection of Process interfaces."),
+      	nonextensible,
+		oleautomation,
+    ]
+    interface Processes : IUnknown {
+		[helpstring("The Process host will call Load passing an Application object. The Process may keep references to it provided the Process destroys all Application references when Disconnect is called.")]
+		HRESULT Load   ([in] Application* HostApp );
+		[helpstring("The Process host will call Unload when the application must shut down. The Process must destroy all references to the Application object passed in the Connect method.")]
+		HRESULT Unload();
+		[helpstring("Returns a pointer to process specified by Application")]
+		HRESULT Process([in] BSTR* Identifier, [out,retval] Process** thisProcess);
+    };*/
+
+    [
+      	uuid(6B80DA82-130E-4b7a-AE16-0C67475AE4E6),
+      	helpstring("The hosting application provides services to any Process through the Application interface."),
+		nonextensible,
+		oleautomation,
+    ]
+    interface Application : IUnknown {
+	    	[helpstring("Logs processor happenings from the application's standard logging routine.")]
+            HRESULT Log([in] BSTR Object, [in] BSTR Method,[in, optional, defaultvalue("")] BSTR Message, [in, optional, defaultvalue(8)] GPS_LOG_DETAIL  LogDetail,[in, optional, defaultvalue(0)] long  ErrorID, [in, optional, defaultvalue("")] BSTR LogSource,[in, optional, defaultvalue(0)] GPS_LOG_SOURCE  LogSourceDetail);
+			[helpstring("Callback when Process is finished with Message.")]
+			HRESULT ProcessComplete([in] GPSMessage* Message, [in] BSTR Identifier);
+			[helpstring("Versioning of Host Application.")]
+			HRESULT IsVersionAtLeast([in] BSTR Version, [out,retval] VARIANT_BOOL* YesOrNo);
+			[helpstring("Versioning of Host Application.")]
+			[propget] HRESULT HostStatus([out,retval] GPS_HOST_STATUS* StatusCode);
+			[helpstring("Callback when Host Status Changes.")]
+			HRESULT StatusChanged();
+
+    };
+    
+	[
+      	uuid(77DCD31F-BB7F-44ed-8D53-08C3F921684D),
+      	helpstring("Global Positioning Message that is transformed by process."),
+      	nonextensible,
+		oleautomation,
+    ]
+    interface GPSMessage : IUnknown {
+		[propput] HRESULT Status([in] GPS_MESSAGE_STATUS *PropData);
+		[propget] HRESULT Status([out, retval] GPS_MESSAGE_STATUS* PropData);
+		[propput] HRESULT Type([in] BSTR *PropData);
+		[propget] HRESULT Type([out, retval] BSTR* PropData);
+		[propput] HRESULT rawMessage([in] BSTR PropData);
+		[propget] HRESULT rawMessage ([out, retval] BSTR* PropData);
+	};
+}
